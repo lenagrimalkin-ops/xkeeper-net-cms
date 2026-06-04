@@ -1,0 +1,11 @@
+name: k8s stage
+on:
+  push:
+    tags: [ 'stage-v*' ]
+
+jobs:
+  k8s-stage:
+    uses: X-Keeper/workflows_templates/.github/workflows/k8s-stage.yml@main
+    with:
+      project_name: ${{ github.event.repository.name }}
+    secrets: inherit

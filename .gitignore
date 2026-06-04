@@ -1,0 +1,18 @@
+# Strapi defaults
+.cache
+build
+dist
+node_modules
+.tmp
+.strapi
+.strapi-updater.json
+
+# Env
+.env
+.env.local
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.log
