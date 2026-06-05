@@ -20,5 +20,5 @@ COPY --from=builder /opt/app ./
 EXPOSE 1337
 CMD ["npm", "run", "start"]
 
-HEALTHCHECK --start-period=30s \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:1337/_health || exit 1
+HEALTHCHECK --start-period=60s --interval=30s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT:-1337}/admin || exit 1

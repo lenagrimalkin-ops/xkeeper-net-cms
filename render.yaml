@@ -1,0 +1,55 @@
+# Render Blueprint for Strapi 5 + Postgres
+# https://render.com/docs/blueprint-spec
+#
+# Usage:
+#   1. Push this repo to GitHub
+#   2. Render Dashboard → New + → Blueprint → Connect this repo
+#   3. Render creates 1 web service + 1 Postgres database automatically
+#
+# Free tier caveats (Phase A MVP only):
+#   - Web service sleeps after 15 min idle, wakes in ~30 s on next request
+#   - Postgres free tier expires after 90 days, then deleted
+#   - Both fine for showing how Strapi works to marketing; not for prod
+
+services:
+  - type: web
+    name: xkeeper-net-cms
+    runtime: docker
+    plan: free
+    region: frankfurt  # ближайший к РФ
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /admin  # Strapi 5 не имеет /_health, /admin отдаёт 200 после старта
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 1337
+      - key: DATABASE_CLIENT
+        value: postgres
+      - key: DATABASE_URL
+        fromDatabase:
+          name: xkeeper-net-cms-db
+          property: connectionString
+      - key: DATABASE_SSL
+        value: "true"
+      - key: DATABASE_SSL_REJECT_UNAUTHORIZED
+        value: "false"
+      - key: APP_KEYS
+        generateValue: true
+      - key: API_TOKEN_SALT
+        generateValue: true
+      - key: ADMIN_JWT_SECRET
+        generateValue: true
+      - key: TRANSFER_TOKEN_SALT
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+
+databases:
+  - name: xkeeper-net-cms-db
+    databaseName: strapi
+    user: strapi
+    plan: free
+    region: frankfurt
