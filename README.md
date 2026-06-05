@@ -2,68 +2,96 @@
 
 Strapi 5 — headless CMS для x-keeper.net (редизайн).
 
-- **Stage admin:** https://cms.xkeeper-net.stage.x-keeper.net/admin
-- **Frontend:** https://xkeeper-net.stage.x-keeper.net (репо `X-Keeper/xkeeper-net-frontend`)
+## Демо-стенд (Phase A MVP)
+
+- **Strapi admin:** https://xkeeper-net-cms.onrender.com/admin
+- **Public API:** https://xkeeper-net-cms.onrender.com/api/*
+- **Frontend:** https://xkeeper-net-frontend-76ip5ndmn-lenagrimalkin-ops-projects.vercel.app
 - **Брифинг проекта:** [Confluence — Draft v0.6](https://x-keeper.atlassian.net/wiki/spaces/P/pages/2023981067)
 - **План миграции:** [Confluence](https://x-keeper.atlassian.net/wiki/spaces/P/pages/2044035091)
 
-## Бутстрап (один раз, после клонирования)
+Деплой: GitHub `lenagrimalkin-ops/xkeeper-net-cms` → Render auto-deploy on push.
 
-Файлы Strapi (config/, src/, package.json) генерируются официальным CLI. Этот репо изначально содержит только deploy-обвязку (Dockerfile, workflow, values, .env.example).
+## Content-types
 
-```bash
-cd ~/xk/xkeeper-net-cms
+Все типы описаны как **код** в `src/api/` и `src/components/`. Strapi подхватывает их при старте — никаких UI-кликов в Content-Type Builder не требуется.
 
-# Заводим Strapi в текущей директории.
-# --no-run чтобы не стартовать сразу, --skip-cloud чтобы не звал в Strapi Cloud.
-npx create-strapi@latest . \
-  --typescript \
-  --skip-cloud \
-  --no-run \
-  --dbclient=sqlite \
-  --dbname=tmp \
-  --use-npm
+Структура:
 
-# Скопировать .env.example → .env (для локального запуска)
-cp .env.example .env
+- **`src/components/shared/*`** — 12 переиспользуемых компонентов: seo, feature, spec, cta, number-stat, faq-item, case-item, review-item, partner-item, link, social-link.
+- **`src/components/blocks/*`** — 12 блоков для Dynamic Zone: hero, text-media, advantages, numbers, cases, services-turnkey, cta-block, faq, form, reviews, video, partners.
+- **`src/api/page/`** — Page (универсальная страница с конструктором блоков).
+- **`src/api/product/`** — Product (карточка оборудования).
+- **`src/api/service/`** — Service (страница услуги).
+- **`src/api/solution/`** — Solution (отраслевое решение).
+- **`src/api/global-setting/`** — Global Settings (single type).
 
-# Сгенерировать реальные секреты на место replace-me
-# (для локала, для стейджа — пока хардкод в deploy/values-stage.yaml, см. TODO)
-node -e "console.log('APP_KEYS=' + [1,2].map(() => require('crypto').randomBytes(16).toString('base64')).join(','))" >> .env
-```
+Полная спецификация: [docs/content-types.md](docs/content-types.md).
 
-## Локальный запуск
+## После первого деплоя — что сделать в админке
+
+После того как Render передеплоил с новыми схемами:
+
+### 1. Включить публичный доступ к API (1 минута)
+
+Settings → Users & Permissions Plugin → Roles → **Public** → отметить:
+
+| Content type | find | findOne |
+|---|---|---|
+| Page | ✓ | ✓ |
+| Product | ✓ | ✓ |
+| Service | ✓ | ✓ |
+| Solution | ✓ | ✓ |
+| Global-setting | ✓ | — |
+
+Нажать **Save** в правом верхнем углу.
+
+Без этого фронт получит 401/403 при попытке прочитать содержимое.
+
+### 2. Создать API Token для фронта
+
+Settings → API Tokens → **Create new API Token**:
+
+- Name: `xkeeper-net-frontend`
+- Description: `Read-only token for Vercel frontend`
+- Token duration: **Unlimited**
+- Token type: **Read-only**
+
+Жми **Save** → токен покажется **один раз** — скопируй сразу.
+
+Этот токен попозже добавим как `STRAPI_TOKEN` env в Vercel-проект.
+
+### 3. Заполнить тестовый контент
+
+В Content Manager создать минимальный набор:
+
+1. **Global Settings** — заполнить телефон, email, реквизиты, навигацию (5 пунктов меню).
+2. **Page** «Главная» — `isHome=true`, добавить блоки: hero, numbers, advantages, services-turnkey, partners, form.
+3. **Product** «Invis 3D W» — заполнить технические характеристики.
+4. **Service** «Установка и маркирование» — короткая страница.
+5. **Solution** «Для лизингодателей» — лендинг.
+
+## Локальная разработка
 
 ```bash
 npm install
+cp .env.example .env
+# заполнить .env: APP_KEYS, JWT_SECRET, и т.д. (генерируется openssl rand -base64 24)
 npm run develop   # http://localhost:1337/admin
-```
-
-Первый запуск попросит создать super-admin аккаунт.
-
-## Деплой на stage
-
-По тегу `stage-vYYYYMMDD-<descr>-HHMMSS`:
-
-```bash
-TS=$(date +%H%M%S)
-DATE=$(date +%Y%m%d)
-git tag -a "stage-v${DATE}-<short>-${TS}" -m "Deploy <что>"
-git push origin "stage-v${DATE}-<short>-${TS}"
 ```
 
 ## База данных
 
-- **Phase A (сейчас):** SQLite в эфемерном томе пода. **Контент пропадает при рестарте/redeploy.** Для демо это ок — пересоздать 5 страниц быстро.
-- **Phase B:** переключиться на PostgreSQL (отдельный Helm-релиз или существующий PG в кластере), DATABASE_URL из k8s Secret, медиа на PVC.
+- **Текущая** (Phase A demo): Postgres на Render free tier (срок 90 дней, потом перевыпуск).
+- **Локальная**: SQLite в `.tmp/data.db` (если не переопределить DATABASE_CLIENT).
+- **Прод**: будет k8s + Postgres в namespace vibe-panel.
 
-## Секреты
+## Переезд на X-Keeper org
 
-Сейчас в `deploy/values-stage.yaml` хардкод `phaseA-placeholder` (отметить TODO). Перед первой раздачей доступа маркетингу:
-1. Сгенерировать настоящие случайные значения для `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `JWT_SECRET`.
-2. Положить в k8s Secret (через админа или kubectl).
-3. В values-stage.yaml заменить `env:` на `envFrom: [secretRef:]`.
+Когда admin создаст репо `X-Keeper/xkeeper-net-cms`:
 
-## Как работать с контентом
-
-См. секцию «Strapi 101» в этом README или внутренний гайд (отдельный документ для маркетинга).
+```bash
+git remote set-url origin https://github.com/X-Keeper/xkeeper-net-cms.git
+git push -u origin main
+# Также добавить .github/workflows/k8s-stage.yml (он уже здесь) → push tag stage-v* → k8s deploy
+```
