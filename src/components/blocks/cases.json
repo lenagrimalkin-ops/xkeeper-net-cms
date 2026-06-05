@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_cases",
+  "info": { "displayName": "Cases", "icon": "briefcase" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "items": { "type": "component", "repeatable": true, "component": "shared.case-item" }
+  }
+}

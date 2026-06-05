@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_social_links",
+  "info": { "displayName": "Social Link", "icon": "globe" },
+  "options": {},
+  "attributes": {
+    "platform": {
+      "type": "enumeration",
+      "enum": ["telegram", "whatsapp", "vk", "youtube"],
+      "required": true
+    },
+    "url": { "type": "string", "required": true }
+  }
+}

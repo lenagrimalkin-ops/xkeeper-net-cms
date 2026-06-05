@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "solutions",
+  "info": {
+    "singularName": "solution",
+    "pluralName": "solutions",
+    "displayName": "Solution",
+    "description": "Отраслевое решение (Лизинг, Грузоперевозки, Контроль автопарка)"
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "segment": {
+      "type": "enumeration",
+      "enum": ["leasing", "freight", "fleet"],
+      "required": true
+    },
+    "summary": { "type": "text" },
+    "heroImage": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "relatedProducts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product"
+    },
+    "relatedServices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    },
+    "seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.hero",
+        "blocks.text-media",
+        "blocks.advantages",
+        "blocks.numbers",
+        "blocks.cases",
+        "blocks.services-turnkey",
+        "blocks.cta-block",
+        "blocks.faq",
+        "blocks.form",
+        "blocks.reviews",
+        "blocks.video",
+        "blocks.partners"
+      ]
+    }
+  }
+}

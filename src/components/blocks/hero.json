@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_blocks_heros",
+  "info": { "displayName": "Hero", "icon": "rocket" },
+  "options": {},
+  "attributes": {
+    "heading": { "type": "string", "required": true },
+    "subheading": { "type": "text" },
+    "backgroundMedia": { "type": "media", "multiple": false, "allowedTypes": ["images", "videos"] },
+    "cta": { "type": "component", "repeatable": false, "component": "shared.cta" }
+  }
+}

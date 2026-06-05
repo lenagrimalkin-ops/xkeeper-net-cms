@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_blocks_services_turnkey",
+  "info": { "displayName": "Services Turnkey", "icon": "cogs" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    }
+  }
+}

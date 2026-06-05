@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_case_items",
+  "info": { "displayName": "Case Item", "icon": "file-alt" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "problem": { "type": "text" },
+    "solution": { "type": "text" },
+    "result": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}

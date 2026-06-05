@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_numbers",
+  "info": { "displayName": "Numbers / Stats", "icon": "chart-line" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "items": { "type": "component", "repeatable": true, "component": "shared.number-stat" }
+  }
+}

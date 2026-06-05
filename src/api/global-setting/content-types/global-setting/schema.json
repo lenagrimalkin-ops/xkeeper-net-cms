@@ -1,0 +1,24 @@
+{
+  "kind": "singleType",
+  "collectionName": "global_settings",
+  "info": {
+    "singularName": "global-setting",
+    "pluralName": "global-settings",
+    "displayName": "Global Settings",
+    "description": "Глобальные настройки сайта (одна запись)"
+  },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "siteName": { "type": "string", "default": "X-Keeper" },
+    "phone": { "type": "string" },
+    "email": { "type": "email" },
+    "legalAddress": { "type": "text" },
+    "legalDetails": { "type": "richtext" },
+    "footerLinks": { "type": "component", "repeatable": true, "component": "shared.link" },
+    "socialLinks": { "type": "component", "repeatable": true, "component": "shared.social-link" },
+    "navigationHeader": { "type": "component", "repeatable": true, "component": "shared.link" },
+    "yandexMetricaId": { "type": "string" },
+    "consentText": { "type": "richtext" }
+  }
+}

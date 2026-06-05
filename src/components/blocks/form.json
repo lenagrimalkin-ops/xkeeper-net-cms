@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_forms",
+  "info": { "displayName": "Form", "icon": "envelope" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "formType": {
+      "type": "enumeration",
+      "enum": ["personal-offer", "industry", "service"],
+      "required": true,
+      "default": "personal-offer"
+    },
+    "prefilledSubject": { "type": "string" }
+  }
+}

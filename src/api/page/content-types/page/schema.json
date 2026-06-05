@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": "Универсальная страница (главная и любая прочая)"
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "isHome": { "type": "boolean", "default": false },
+    "seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.hero",
+        "blocks.text-media",
+        "blocks.advantages",
+        "blocks.numbers",
+        "blocks.cases",
+        "blocks.services-turnkey",
+        "blocks.cta-block",
+        "blocks.faq",
+        "blocks.form",
+        "blocks.reviews",
+        "blocks.video",
+        "blocks.partners"
+      ]
+    }
+  }
+}

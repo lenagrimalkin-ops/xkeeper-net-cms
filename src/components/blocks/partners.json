@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_partners",
+  "info": { "displayName": "Partners", "icon": "users" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "items": { "type": "component", "repeatable": true, "component": "shared.partner-item" }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_blocks_videos",
+  "info": { "displayName": "Video", "icon": "video" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "videoUrl": { "type": "string", "required": true },
+    "poster": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}

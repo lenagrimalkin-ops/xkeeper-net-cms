@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_shared_number_stats",
+  "info": { "displayName": "Number Stat", "icon": "chart-bar" },
+  "options": {},
+  "attributes": {
+    "number": { "type": "string", "required": true },
+    "label": { "type": "string", "required": true }
+  }
+}

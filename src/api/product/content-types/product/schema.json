@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product",
+    "description": "Карточка оборудования (Invis 3D W/L/S, Online Slim/Space/Fly, Invis Container)"
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "name", "required": true },
+    "series": {
+      "type": "enumeration",
+      "enum": ["invis", "online", "container"],
+      "required": true
+    },
+    "model": { "type": "string" },
+    "summary": { "type": "text" },
+    "heroImage": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "features": { "type": "component", "repeatable": true, "component": "shared.feature" },
+    "specs": { "type": "component", "repeatable": true, "component": "shared.spec" },
+    "usageScenarios": { "type": "richtext" },
+    "gallery": { "type": "media", "multiple": true, "allowedTypes": ["images"] },
+    "documents": { "type": "media", "multiple": true, "allowedTypes": ["files"] },
+    "seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.hero",
+        "blocks.text-media",
+        "blocks.advantages",
+        "blocks.numbers",
+        "blocks.cases",
+        "blocks.cta-block",
+        "blocks.faq",
+        "blocks.form",
+        "blocks.reviews",
+        "blocks.video"
+      ]
+    }
+  }
+}

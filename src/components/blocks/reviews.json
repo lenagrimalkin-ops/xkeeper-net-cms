@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_reviews",
+  "info": { "displayName": "Reviews", "icon": "comments" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "items": { "type": "component", "repeatable": true, "component": "shared.review-item" }
+  }
+}

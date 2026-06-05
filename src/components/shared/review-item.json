@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_review_items",
+  "info": { "displayName": "Review Item", "icon": "quote-right" },
+  "options": {},
+  "attributes": {
+    "author": { "type": "string", "required": true },
+    "position": { "type": "string" },
+    "company": { "type": "string" },
+    "quote": { "type": "text", "required": true },
+    "avatar": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}

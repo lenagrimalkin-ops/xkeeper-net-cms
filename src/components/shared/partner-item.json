@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_shared_partner_items",
+  "info": { "displayName": "Partner Item", "icon": "handshake" },
+  "options": {},
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "logo": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "url": { "type": "string" }
+  }
+}

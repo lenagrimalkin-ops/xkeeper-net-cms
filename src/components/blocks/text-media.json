@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_text_media",
+  "info": { "displayName": "Text + Media", "icon": "image" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "body": { "type": "richtext" },
+    "media": { "type": "media", "multiple": false, "allowedTypes": ["images", "videos"] },
+    "mediaPosition": {
+      "type": "enumeration",
+      "enum": ["left", "right"],
+      "default": "right"
+    }
+  }
+}

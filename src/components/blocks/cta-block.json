@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_cta_blocks",
+  "info": { "displayName": "CTA Block", "icon": "bullhorn" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "cta": { "type": "component", "repeatable": false, "component": "shared.cta" },
+    "formType": {
+      "type": "enumeration",
+      "enum": ["personal-offer", "industry", "service"],
+      "default": "personal-offer"
+    }
+  }
+}

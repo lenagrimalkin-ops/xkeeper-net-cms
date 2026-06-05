@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_advantages",
+  "info": { "displayName": "Advantages", "icon": "check-circle" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "items": { "type": "component", "repeatable": true, "component": "shared.feature" }
+  }
+}
